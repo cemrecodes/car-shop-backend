@@ -125,8 +125,6 @@ module.exports={
     },
     login: (req, res) => {
         const body = req.body;
-        console.log(body.Email)
-        console.log("pass: " + body.Password)
         getCustomerByEmail(body.Email, (err, results) => {
             if(err){
                 console.log(err);
@@ -137,23 +135,23 @@ module.exports={
                     data: "Invalid email or password"
                 });
             }
-            console.log("body pass: " + body.Password)
-            console.log("res pass: " + results[0].Password)
-            console.log(body.Password == results[0].Password);
             const result = compareSync(body.Password, results[0].Password);
-            console.log(result);
             if(result){
-                const jsontoken = sign(
-                    { result: results}
-                   ,
-                    process.env.env_variable,{
+               // results.Password = undefined;
+                const jsontoken = sign({ 
+                    result: results},
+                    process.env.KEY,
+                    {
                     expiresIn: "2h"
                 }
                 );
                 return res.json({
                     success: 1,
                     message: "Login successfully",
-                    token: jsontoken
+                    token: jsontoken,
+                    Headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    }
                 }
                 );
             }
