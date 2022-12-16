@@ -5,7 +5,7 @@ module.exports = {
 create : (data,callBack) => {
     
     pool.query(
-        'insert into Customer (Name, Address, Customer_ID, TC) values( ?, ?, ?, ?)', 
+        'insert into Company (Name, Address, Customer_ID, TC) values( ?, ?, ?, ?)', 
     [
         data.Name,
         data.Address,
@@ -34,7 +34,7 @@ getCompanies : callBack => {
     );
 },
 getCompanyByID :(id,callBack) =>{
-    pool.query('select * from Customer where Company_ID =  ?',
+    pool.query('select * from Company where Company_ID =  ?',
     [id],
     (error, results,fields) =>{
         if(error) {
