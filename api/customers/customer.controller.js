@@ -1,4 +1,4 @@
-const {create,getCustomerByEmail,getCustomerByCustomerEmail,getCustomers,deleteCustomer,updateCustomer} = require('./customer.service');
+const {create,getCustomerByEmail,getCustomerByCustomerEmail,getCustomers,deleteCustomer,updateCustomer,getCustomerIDByEmail} = require('./customer.service');
 
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -57,6 +57,27 @@ module.exports={
         const email = req.params.email;
         console.log("results: "+email);
         getCustomerByEmail(email,(err,results) => {
+            console.log(email);
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if(!results) {
+                return res.json({
+                    success:0,
+                    message: "kayit bulunamadi"
+                });
+            }
+            return res.json({
+                success:1,
+                data: results[0]
+            });
+        });
+    }, 
+    getCustomerIDByEmail: (req, res) => {
+        const email = req.params.email;
+        console.log("results: "+email);
+        getCustomerIDByEmail(email,(err,results) => {
             console.log(email);
             if (err) {
                 console.log(err);

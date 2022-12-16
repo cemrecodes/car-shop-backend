@@ -34,6 +34,18 @@ getCustomers : callBack => {
     
     );
 },
+getCustomerIDByEmail :(email,callBack) =>{
+    pool.query('select Customer_ID from Customer where Email =  ?',
+    [email],
+    (error, results,fields) =>{
+        console.log("db email: " + email );
+        if(error) {
+            callBack(error);
+        }
+        return callBack(null,results);
+    }
+    );
+},
 getCustomerByEmail :(email,callBack) =>{
     pool.query('select Email,Password from Customer where Email =  ?',
     [email],
