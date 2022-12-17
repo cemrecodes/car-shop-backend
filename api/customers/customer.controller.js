@@ -159,20 +159,21 @@ module.exports={
             const result = compareSync(body.Password, results[0].Password);
             if(result){
                // results.Password = undefined;
-                const jsontoken = sign({ 
-                    result: results},
-                    process.env.KEY,
-                    {
-                    expiresIn: "2h"
-                }
-                );
+                // const jsontoken = sign({ 
+                //     result: results},
+                //     process.env.KEY,
+                //     {
+                //     expiresIn: "2h"
+                // }
+                // );
                 return res.json({
                     success: 1,
                     message: "Login successfully",
-                    token: jsontoken,
-                    Headers: {
-                        "Access-Control-Allow-Origin": "*"
-                    }
+                    email: body.Email
+                    // token: jsontoken,
+                    // Headers: {
+                    //     "Access-Control-Allow-Origin": "*"
+                    // }
                 }
                 );
             }

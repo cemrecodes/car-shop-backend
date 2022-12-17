@@ -16,7 +16,7 @@ create : (data,callBack) => {
         data.KM,
         data.Color,
         data.Description,
-        data.Imgage_Link
+        data.Image_Link
     ], 
     (error,results,fields) => {
         if (error) {

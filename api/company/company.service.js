@@ -2,7 +2,8 @@ const pool = require("../../config/database");
 
 
 module.exports = {
-create : (data,callBack) => {
+createCom : (data,callBack) => {
+    console.log("data")
     
     pool.query(
         'insert into Company (Name, Address, Customer_ID, TC) values( ?, ?, ?, ?)', 
@@ -21,7 +22,7 @@ create : (data,callBack) => {
     );
 },
 getCompanies : callBack => {
-    pool.query('select Name, Address from Company ',
+    pool.query('select * from Company ',
     [],
     (err, results,fields) =>{
         if(err) {
@@ -36,6 +37,17 @@ getCompanies : callBack => {
 getCompanyByID :(id,callBack) =>{
     pool.query('select * from Company where Company_ID =  ?',
     [id],
+    (error, results,fields) =>{
+        if(error) {
+            callBack(error);
+        }
+        return callBack(null,results);
+    }
+    );
+},
+getCompanyIDByName :(name,callBack) =>{
+    pool.query('select Company_ID from Company where Name = ?',
+    [name],
     (error, results,fields) =>{
         if(error) {
             callBack(error);

@@ -1,4 +1,4 @@
-const {create,deleteCompany,getCompanies,getCompanyByID} = require('./company.service');
+const {createCom,deleteCompany,getCompanies,getCompanyIDByName,getCompanyByID} = require('./company.service');
 
 // const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 // const { sign } = require("jsonwebtoken");
@@ -6,8 +6,9 @@ const {create,deleteCompany,getCompanies,getCompanyByID} = require('./company.se
  
 module.exports={
     createCompany : (req, res) => {
+        console.log("burda")
         const body = req.body;
-        create(body,(err, results) => {
+        createCom(body,(err, results) => {
             if (err) {
                 console.log("ERROR!\n " + err);
             return res.status(500).json({
@@ -44,7 +45,7 @@ module.exports={
     //     });
     // }, 
        getCompanyByID: (req, res) => {
-        const id = req.params.email;
+        const id = req.params.Company_ID;
         getCompanyByID(id,(err,results) => {
             console.log(id);
             if (err) {
@@ -84,6 +85,41 @@ module.exports={
             });
         });
     }, 
+    getCompanyIDByName: (req, res) => {
+        const name = req.params.name;
+        console.log("results: "+name);
+        getCompanyIDByName(name,(err,results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if(!results) {
+                return res.json({
+                    success:0,
+                    message: "kayit bulunamadi"
+                });
+            }
+            return res.json({
+                success:1,
+                data: results[0]
+            });
+        });
+    }, 
+    // getCompanyIDByName: (req, res) => {
+    //     console.log(req.params.name)
+    //     const name = req.params.name;
+    //     console.log("results: "+ name);
+    //     getCompanyIDByName(name,(err, results) => {
+    //         if (err) {
+    //             console.log(err);
+    //             return;
+    //         }            
+    //         return res.json({
+    //             success: 1,
+    //             data: results[0]
+    //         });
+    //     });
+    // }, 
     getCompanies: (req, res) => {
         getCompanies((err, results) => {
             if (err) {
