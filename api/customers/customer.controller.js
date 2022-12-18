@@ -170,7 +170,8 @@ module.exports={
                     success: 1,
                     message: "Login successfully",
                     email: body.Email
-                    // token: jsontoken,
+                    // ,
+                    // // token: jsontoken,
                     // Headers: {
                     //     "Access-Control-Allow-Origin": "*"
                     // }

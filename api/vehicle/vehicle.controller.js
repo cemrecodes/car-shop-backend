@@ -1,4 +1,4 @@
-const {create,getVehicles,getVehiclesByID,deleteVehicle} = require('./vehicle.service');
+const {create,getVehicles,getVehicleByID,deleteVehicle, getOurVehicles} = require('./vehicle.service');
  
 module.exports={
     createVehicle : (req, res) => {
@@ -19,7 +19,8 @@ module.exports={
     },
 
     getVehicleByID: (req, res) => {
-        const id = req.params.ID;
+        const id = req.params.id;
+        console.log(id)
         getVehicleByID(id,(err,results) => {
             console.log(id);
             if (err) {
@@ -40,6 +41,19 @@ module.exports={
     }, 
     getVehicles: (req, res) => {
         getVehicles((err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }            
+            return res.json({
+                success: 1,
+                data: results
+            });
+        });
+    }, 
+    getOurVehicles: (req, res) => {
+        console.log("11111111111    ")
+        getOurVehicles((err, results) => {
             if (err) {
                 console.log(err);
                 return;

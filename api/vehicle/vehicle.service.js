@@ -26,6 +26,18 @@ create : (data,callBack) => {
     }
     );
 },
+getOurVehicles : callBack => {
+    console.log("here")
+    pool.query('SELECT Vehicle_ID,Name,Price,Brand,Model,Year,Type,KM,Color,Description,Image_Link FROM Vehicle LEFT JOIN Company ON Vehicle.Company_ID = Company.Company_ID LEFT JOIN FuelType ON Vehicle.Fuel_ID = FuelType.Fuel_ID',
+    (err, results,fields) =>{
+        if(err) {
+            callBack(err);
+       }
+        return callBack(null,results);
+    }
+    
+    );
+},
 getVehicles : callBack => {
     pool.query('select * from Vehicle ',
     [],
@@ -43,6 +55,8 @@ getVehicleByID :(ID,callBack) =>{
     pool.query('select * from Vehicle where Vehicle_ID =  ?',
     [ID],
     (error, results,fields) =>{
+        
+        console.log("ID: " + ID );
         if(error) {
             callBack(error);
         }
@@ -50,6 +64,7 @@ getVehicleByID :(ID,callBack) =>{
     }
     );
 },  
+
 // updateVehicle :(data,callBack) => {
 //     pool.query(
 //        'update Customer set Email= ? , set Password= ? where id= ?' ,
