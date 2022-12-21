@@ -1,6 +1,6 @@
 const {create,getCustomerByEmail,getCustomerByCustomerEmail,getCustomers,deleteCustomer,updateCustomer,getCustomerIDByEmail} = require('./customer.service');
 
-const { hashSync, genSaltSync, compareSync } = require("bcrypt");
+const { hashSync, genSaltSync, compareSync ,compare} = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { json } = require('express');
  
@@ -17,7 +17,7 @@ module.exports={
         // if( flag ){
         create(body,(err, results) => {
             if (err) {
-                console.log("ERROR!\n " + err);
+                console.log("ERR R!\n " + err);
             return res.status(500).json({
                success: 0,
                message: "connection error"
@@ -156,34 +156,35 @@ module.exports={
                     data: "Invalid email or password"
                 });
             }
-            const result = compareSync(body.Password, results[0].Password);
-            if(result){
-               // results.Password = undefined;
-                // const jsontoken = sign({ 
-                //     result: results},
-                //     process.env.KEY,
-                //     {
-                //     expiresIn: "2h"
-                // }
-                // );
-                return res.json({
-                    success: 1,
-                    message: "Login successfully",
-                    email: body.Email
-                    // ,
-                    // // token: jsontoken,
-                    // Headers: {
-                    //     "Access-Control-Allow-Origin": "*"
+            compare(body.Password, results[0].Password,function(err, result){
+                if(result){
+                   // results.Password = undefined;
+                    // const jsontoken = sign({ 
+                    //     result: results},
+                    //     process.env.KEY,
+                    //     {
+                    //     expiresIn: "2h"
                     // }
+                    // );
+                    return res.json({
+                        success: 1,
+                        message: "Login successfully",
+                        email: body.Email
+                        // ,
+                        // // token: jsontoken,
+                        // Headers: {
+                        //     "Access-Control-Allow-Origin": "*"
+                        // }
+                    }
+                    );
                 }
-                );
-            }
-            else {
-                return res.json({
-                    success: 0,
-                    data: "Invalid email or password"
-                });
-            }
+                else {
+                    return res.json({
+                        success: 0,
+                        data: "Invalid email or password"
+                    });
+                }
+            });
         });
     },
 

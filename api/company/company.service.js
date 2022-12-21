@@ -6,12 +6,13 @@ createCom : (data,callBack) => {
     console.log("data")
     
     pool.query(
-        'insert into Company (Name, Address, Customer_ID, TC) values( ?, ?, ?, ?)', 
+        'insert into Company (Name, TC, Address, Customer_ID) values( ?, ?, ?, ?)', 
     [
         data.Name,
+        data.TC,
         data.Address,
-        data.Customer_ID,
-        data.TC
+        data.Customer_ID
+        
     ], 
     (error,results,fields) => {
         if (error) {
@@ -48,6 +49,17 @@ getCompanyByID :(id,callBack) =>{
 getCompanyIDByName :(name,callBack) =>{
     pool.query('select Company_ID from Company where Name = ?',
     [name],
+    (error, results,fields) =>{
+        if(error) {
+            callBack(error);
+        }
+        return callBack(null,results);
+    }
+    );
+},
+getCompanyIDByEmail :(email,callBack) =>{
+    pool.query('SELECT Company_ID,Email from Company LEFT JOIN Customer ON Company.Customer_ID = Customer.Customer_ID where Email = ?',
+    [email],
     (error, results,fields) =>{
         if(error) {
             callBack(error);

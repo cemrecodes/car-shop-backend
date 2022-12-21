@@ -19,6 +19,7 @@ module.exports={
     },
 
     getVehicleByID: (req, res) => {
+        console.log("HADİSENE ARTIK",req.params)
         const id = req.params.id;
         console.log(id)
         getVehicleByID(id,(err,results) => {
@@ -80,7 +81,9 @@ module.exports={
     //     });
     // },
     deleteVehicle: (req, res) => {
+        console.log("DELTE")
         const data = req.body;
+        console.log("DELETE",req.body)
     
         deleteVehicle(data, (err, results) => {
             if (err) {
@@ -90,13 +93,14 @@ module.exports={
             if (!results) {
                 return res.json({
                 success: 0,
-                message: "Araç bulunamadı!"
+                message: "Bulunamadi"
             });
         }
+        
+            else
             return res.json({
                 success: 1,
-                message: "Araç silindi!"
+                message: "silindi"
             });
         });
-    }
-};
+    }}

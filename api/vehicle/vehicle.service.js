@@ -55,11 +55,12 @@ getVehicleByID :(ID,callBack) =>{
     pool.query('SELECT Vehicle_ID,Name,Price,Brand,Model,Year,Type,KM,Color,Description,Image_Link,Name_Surname FROM Vehicle LEFT JOIN Company ON Vehicle.Company_ID = Company.Company_ID LEFT JOIN FuelType ON Vehicle.Fuel_ID = FuelType.Fuel_ID LEFT JOIN Customer ON Company.Customer_ID = Customer.Customer_ID where Vehicle_ID =  ?',
     [ID],
     (error, results,fields) =>{
-        
+        console.log(results)
         console.log("ID: " + ID );
         if(error) {
             callBack(error);
         }
+        
         return callBack(null,results);
     }
     );
@@ -83,7 +84,7 @@ getVehicleByID :(ID,callBack) =>{
 deleteVehicle : (data, callBack) => {
     pool.query(
         'delete from Vehicle where Vehicle_ID = ?',
-        [data.ID],
+        [data.Vehicle_ID],
         (error, results, fields) => {
             if (error) {
                 return callBack(error);

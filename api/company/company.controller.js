@@ -1,4 +1,4 @@
-const {createCom,deleteCompany,getCompanies,getCompanyIDByName,getCompanyByID} = require('./company.service');
+const {createCom,deleteCompany,getCompanyIDByEmail,getCompanies,getCompanyIDByName,getCompanyByID} = require('./company.service');
 
 // const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 // const { sign } = require("jsonwebtoken");
@@ -61,6 +61,27 @@ module.exports={
             return res.json({
                 success:1,
                 data: results[0]
+            });
+        });
+    }, 
+    getCompanyIDByEmail: (req, res) => {
+        const email = req.params.email;
+        console.log(req.params);
+        getCompanyIDByEmail(email,(err,results) => {
+            console.log(email);
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if(!results) {
+                return res.json({
+                    success:0,
+                    message: "kayit bulunamadi"
+                });
+            }
+            return res.json({
+                success:1,
+                data: results
             });
         });
     }, 
